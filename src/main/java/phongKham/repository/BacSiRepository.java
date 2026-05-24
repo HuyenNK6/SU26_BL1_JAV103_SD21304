@@ -25,6 +25,22 @@ public class BacSiRepository {
         return session.createQuery("FROM BacSi").list();
     }
 
+    public BacSi getOne(Integer id){
+        return session.find(BacSi.class, id);
+    }
+    public void add(BacSi bacSi){
+        //dùng try-catch để bắt lỗi khi làm việc vs database
+        //vd: lỗi kết nối, lỗi sql, sai dữ liệu...
+        try {
+            session.getTransaction().begin();//bắt đầu
+            session.save(bacSi);//insert vào database
+            session.getTransaction().commit();//lưu thao tác
+        }catch (Exception e){
+            session.getTransaction().rollback();//hủy toàn bộ thao tác nếu lỗi
+            //vd: nếu insert lỗi thì rollback về trạng thái ban đầu
+            e.printStackTrace();//in chi tiết lỗi
+        }
+    }
     public static void main(String[] args) {
         //đi test chức năng
         System.out.println(new BacSiRepository().getAll());
