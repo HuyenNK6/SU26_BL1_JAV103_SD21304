@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import phongKham.entity.BacSi;
+import phongKham.entity.PhongKham;
 import phongKham.repository.BacSiRepository;
+import phongKham.repository.PhongKhamRepository;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,6 +24,8 @@ import java.util.List;
 })
 public class BacSiServlet extends HttpServlet {
     BacSiRepository bacSiRepo= new BacSiRepository();
+    PhongKhamRepository phongKhamRepo= new PhongKhamRepository();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
@@ -54,9 +58,11 @@ public class BacSiServlet extends HttpServlet {
         String ten = req.getParameter("ten");
         String diaChi = req.getParameter("diaChi");
         BigDecimal luong = new BigDecimal(req.getParameter("luong"));
+        //-> tìm đối tượng Phòng khám theo id
         Integer idPhongKham = Integer.valueOf(req.getParameter("idPhongKham"));
+        PhongKham phongKham = phongKhamRepo.getOne(idPhongKham);
         //2. tạo đối tượng Bác sĩ
-        BacSi bacSi = new BacSi(null, ten, diaChi, luong,idPhongKham);
+        BacSi bacSi = new BacSi(null, ten, diaChi, luong, phongKham);
         //3. thêm bác sĩ mới
         bacSiRepo.add(bacSi);
         //4. hiển thị danh sách mới
@@ -74,8 +80,10 @@ public class BacSiServlet extends HttpServlet {
         //3. set thuộc tính cho đối tượng
         req.setAttribute("bacSi",bacSi);
         //4. gửi cả danh sách bacsi
-        List<BacSi> listBacSi= bacSiRepo.getAll();
+       // List<BacSi> listBacSi= bacSiRepo.getAll();
+        //List<PhongKham> listPhongKham= phongKhamRepo.getAll();//lấy thêm list PK
         req.setAttribute("listBacSi",bacSiRepo.getAll());
+        req.setAttribute("listPhongKham", phongKhamRepo.getAll());//set thêm list PK
         req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req,resp);
     }
 
@@ -85,10 +93,11 @@ public class BacSiServlet extends HttpServlet {
     private void hienThi(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1. lấy danh sách từ bên repository -> csdl
         List<BacSi> listBacSi= bacSiRepo.getAll();
+        List<PhongKham> listPhongKham= phongKhamRepo.getAll();//lấy thêm list PK
         //2. set thuộc tính  -> gửi sang jsp
         req.setAttribute("listBacSi",listBacSi);
+        req.setAttribute("listPhongKham", listPhongKham);//set thêm list PK
         req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req,resp);
-        //BTVN: hiển thị toàn bộ danh sách sang bên hien-thi.jsp
     }
 
 

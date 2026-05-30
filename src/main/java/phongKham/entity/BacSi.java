@@ -23,6 +23,10 @@ public class BacSi {
     private String diaChi;
     @Column(name = "luong")
     private BigDecimal luong;
-    @Column(name = "idPhongKham")
-    private Integer idPhongKham;//chứa id foreign key -> phòng khám
+//    @Column(name = "idPhongKham")
+//    private Integer idPhongKham;//chứa id foreign key -> phòng khám
+    @ManyToOne//Quan hệ N-1=> nhiều bác sĩ- 1 phòng khám
+    @JoinColumn(name = "idPhongKham", referencedColumnName = "id")
+    //Cột khóa ngoại "idPhongKham" trong bảng Bác sĩ -> cột "id" trong bảng Phòng khám
+    private PhongKham phongKham;
 }

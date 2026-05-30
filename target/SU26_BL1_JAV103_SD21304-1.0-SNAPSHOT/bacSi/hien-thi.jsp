@@ -42,10 +42,9 @@ JSTL được chia thành 5 nhóm thẻ chính, mỗi nhóm được thiết k�
     Lương: <input type="text" name="luong" value="${bacSi.luong}"><br>
     <label>Phòng Khám</label>
     <select name="idPhongKham">
-        <option value="1">Phòng Khám đa khoa A</option>
-        <option value="2">Phòng Khám đa khoa B</option>
-        <option value="3">Phòng Khám đa khoa C</option>
-        <option value="4">Phòng Khám đa khoa D</option>
+        <c:forEach items="${listPhongKham}" var="pk" varStatus="i">
+            <option value="${pk.id}" label="${pk.ten}" ${bacSi.phongKham.id == pk.id ? "selected":""}></option>
+        </c:forEach>
     </select><br>
     <button type="submit" value="">
         Thêm Bác Sĩ
@@ -70,7 +69,7 @@ JSTL được chia thành 5 nhóm thẻ chính, mỗi nhóm được thiết k�
             <td>${bs.ten}</td>
             <td>${bs.diaChi}</td>
             <td>${bs.luong}</td>
-            <td>${bs.idPhongKham}</td>
+            <td>${bs.phongKham.ten}</td>
             <td>
                 <a href="/bac-si/detail?id=${bs.id}">Detail</a>
                 <a href="/bac-si/view-update?id=${bs.id}">Update</a>
