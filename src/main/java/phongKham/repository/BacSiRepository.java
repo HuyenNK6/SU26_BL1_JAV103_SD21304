@@ -1,6 +1,7 @@
 package phongKham.repository;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import phongKham.entity.BacSi;
 import phongKham.util.HibernateConfig;
 
@@ -59,13 +60,27 @@ public class BacSiRepository {
         //vd: lỗi kết nối, lỗi sql, sai dữ liệu...
         try {
             session.getTransaction().begin();//bắt đầu
-            session.delete(this.getOne(id));//insert vào database
+            session.delete(this.getOne(id));//xóa khỏi database
             session.getTransaction().commit();//lưu thao tác
         }catch (Exception e){
             session.getTransaction().rollback();//hủy toàn bộ thao tác nếu lỗi
             //vd: nếu insert lỗi thì rollback về trạng thái ban đầu
             e.printStackTrace();//in chi tiết lỗi
         }
+    }
+    //10 phần tử: pageNumber = 1, pageSize = 3
+    //trang 1 : (1-1)* 3=0 => 0 1 2
+    //trang 2 : (2-1)* 3=3 => 3 4 5
+    //trang 3 : (3-1)* 3=6 => 6 7 8
+    //trang 4 : (4-1)* 3=9 => 9
+    public List<BacSi> paging(Integer pageNumber, Integer pageSize){
+       //import org.hibernate.query.Query;
+        Query query = session.createQuery("FROM BacSi ");
+        //xác định điểm đầu tiên lấy kết quả
+        query.setFirstResult((pageNumber-1)*pageSize);
+        //giới hạn số lượng bản ghi được lấy ra
+        query.setMaxResults(pageSize);
+        return query.list();
     }
     public static void main(String[] args) {
         //đi test chức năng

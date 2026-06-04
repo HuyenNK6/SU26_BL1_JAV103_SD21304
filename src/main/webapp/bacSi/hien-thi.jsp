@@ -79,5 +79,10 @@ JSTL được chia thành 5 nhóm thẻ chính, mỗi nhóm được thiết k�
     </c:forEach>
     </tbody>
 </table>
+<a href="/bac-si/paging?pageNumber?=${pageNumber-1}">Trước</a>
+    <c:forEach begin="1" end="${totalPage}" var="i">
+        <a href="/bac-si/paging?pageNumber=${i}">${i}</a>
+    </c:forEach>
+<a href="/bac-si/paging?pageNumber?=${pageNumber+1}">Sau</a>
 </body>
 </html>
