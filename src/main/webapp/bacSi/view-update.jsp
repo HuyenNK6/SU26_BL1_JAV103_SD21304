@@ -24,7 +24,7 @@
             <option value="${pk.id}" label="${pk.ten}" ${bacSi.phongKham.id == pk.id ? "selected":""}></option>
         </c:forEach>
     </select><br>
-    <button type="submit">Cập nhật Bác Sĩ </button>
+    <button type="submit">Cập nhật Bác Sĩ</button>
 </form>
 
 </body>

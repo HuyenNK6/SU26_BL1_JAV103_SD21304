@@ -31,26 +31,26 @@ public class AuthFilter implements Filter {
                     -> URI chứa "nhan-vien" -> cho đi tiếp luôn (doFilter)
                     -> URI ko chứa "nhan-vien" (/quan-ly) -> ko cho truy cập
          */
-        HttpServletRequest req= (HttpServletRequest) servletRequest;
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
         String taiKhoan = (String) session.getAttribute("taiKhoan");
         String chucVu = (String) session.getAttribute("chucVu");
-        if(taiKhoan != null){
+        if (taiKhoan != null) {
             //có tài khoản
-            if(chucVu.equals("quanLy")){
-                filterChain.doFilter(req,resp); //cho đi tiếp
-            }else if (chucVu.equals("nhanVien")){
-                String uri= req.getRequestURI();
+            if (chucVu.equals("quanLy")) {
+                filterChain.doFilter(req, resp); //cho đi tiếp
+            } else if (chucVu.equals("nhanVien")) {
+                String uri = req.getRequestURI();
                 //vai trò nhân viên -> chỉ được vào /nhan-vien/*
-                if(uri.contains("nhan-vien")){
-                    filterChain.doFilter(req,resp); //cho đi tiếp
-                }else{
+                if (uri.contains("nhan-vien")) {
+                    filterChain.doFilter(req, resp); //cho đi tiếp
+                } else {
                     //thông báo ko có quyền truy cập
-                    req.getRequestDispatcher("/demo-filter/error403.jsp").forward(req,resp);
+                    req.getRequestDispatcher("/demo-filter/error403.jsp").forward(req, resp);
                 }
             }
-        }else{
+        } else {
             //chưa có tài khoản -> quay về đăng nhập
             resp.sendRedirect("/demo-filter/login");
 

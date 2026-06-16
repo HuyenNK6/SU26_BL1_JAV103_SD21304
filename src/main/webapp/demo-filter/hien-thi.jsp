@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1> ${message}</h1>
-    <h2> Chào mừng: ..., bạn đang đăng nhập với quyền: ...</h2>
+<h1> ${message}</h1>
+<h2> Chào mừng: ..., bạn đang đăng nhập với quyền: ...</h2>
 </body>
 </html>

@@ -10,12 +10,14 @@ public class PhongKhamRepository {
     private Session session;
 
     public PhongKhamRepository() {
-        session= HibernateConfig.getFACTORY().openSession();
+        session = HibernateConfig.getFACTORY().openSession();
     }
-    public List <PhongKham> getAll(){
+
+    public List<PhongKham> getAll() {
         return session.createQuery("FROM PhongKham").list();
     }
-    public PhongKham getOne(Integer id){
+
+    public PhongKham getOne(Integer id) {
         return session.find(PhongKham.class, id);
     }
 }

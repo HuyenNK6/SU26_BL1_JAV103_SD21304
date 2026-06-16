@@ -13,6 +13,6 @@ public class NhanVienController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("message", "Nhân viên");
-        req.getRequestDispatcher("/demo-filter/hien-thi.jsp").forward(req,resp);
+        req.getRequestDispatcher("/demo-filter/hien-thi.jsp").forward(req, resp);
     }
 }

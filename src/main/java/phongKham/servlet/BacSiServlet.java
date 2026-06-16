@@ -26,21 +26,21 @@ import java.util.List;
         "/bac-si/paging"//GET
 })
 public class BacSiServlet extends HttpServlet {
-    BacSiRepository bacSiRepo= new BacSiRepository();
-    PhongKhamRepository phongKhamRepo= new PhongKhamRepository();
+    BacSiRepository bacSiRepo = new BacSiRepository();
+    PhongKhamRepository phongKhamRepo = new PhongKhamRepository();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(uri.contains("hien-thi")){
+        if (uri.contains("hien-thi")) {
             this.hienThi(req, resp);
-        }else if(uri.contains("view-update")){
+        } else if (uri.contains("view-update")) {
             this.viewUpdate(req, resp);
-        }else if(uri.contains("detail")){
+        } else if (uri.contains("detail")) {
             this.detail(req, resp);
-        }else if(uri.contains("delete")){
+        } else if (uri.contains("delete")) {
             this.delete(req, resp);
-        }else if(uri.contains("paging")){
+        } else if (uri.contains("paging")) {
             this.paging(req, resp);
         }
     }
@@ -49,49 +49,51 @@ public class BacSiServlet extends HttpServlet {
         int pageNumber = 1;
         int pageSize = 3;
         //check ko âm
-        if(pageNumber < 1){
-            pageNumber= 1;
+        if (pageNumber < 1) {
+            pageNumber = 1;
         }
-        if(req.getParameter("pageNumber")!= null){
-            pageNumber= Integer.valueOf(req.getParameter("pageNumber"));
+        if (req.getParameter("pageNumber") != null) {
+            pageNumber = Integer.valueOf(req.getParameter("pageNumber"));
         }
-        int totalRecords= bacSiRepo.getAll().size();
-        int totalPage = (int) Math.ceil((double) totalRecords/ pageSize);
+        int totalRecords = bacSiRepo.getAll().size();
+        int totalPage = (int) Math.ceil((double) totalRecords / pageSize);
 
-        if (pageNumber > totalPage){
-            pageNumber= totalPage;
+        if (pageNumber > totalPage) {
+            pageNumber = totalPage;
         }
-        req.setAttribute("totalPage",totalPage);
-        req.setAttribute("pageNumber",pageNumber);
-        req.setAttribute("listBacSi",bacSiRepo.paging(pageNumber, pageSize));
+        req.setAttribute("totalPage", totalPage);
+        req.setAttribute("pageNumber", pageNumber);
+        req.setAttribute("listBacSi", bacSiRepo.paging(pageNumber, pageSize));
         req.setAttribute("listPhongKham", phongKhamRepo.getAll());
-        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req,resp);
+        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(uri.contains("add")){
+        if (uri.contains("add")) {
             this.add(req, resp);
-        }else if(uri.contains("update")){
+        } else if (uri.contains("update")) {
             this.update(req, resp);
         }
 
     }
+
     private void viewUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1. lấy id của đối tượng cần update
-        Integer id= Integer.valueOf(req.getParameter("id"));
+        Integer id = Integer.valueOf(req.getParameter("id"));
         //2. tìm đối tượng cần update
-        BacSi bacSi= bacSiRepo.getOne(id);
+        BacSi bacSi = bacSiRepo.getOne(id);
         //3. set thuộc tính
-        req.setAttribute("bacSi",bacSi);
+        req.setAttribute("bacSi", bacSi);
         req.setAttribute("listPhongKham", phongKhamRepo.getAll());//bổ sung
         //4. chuyển sang view-update.jsp
-        req.getRequestDispatcher("/bacSi/view-update.jsp").forward(req,resp);
+        req.getRequestDispatcher("/bacSi/view-update.jsp").forward(req, resp);
     }
+
     @SneakyThrows
     private void update(HttpServletRequest req, HttpServletResponse resp) {
-        BacSi bacSi= new BacSi();
+        BacSi bacSi = new BacSi();
         //dùng để gán dữ liệu lấy được từ form về với thuộc tính của object JavaBean- BacSi
         //muốn gán được: name của parameter với tên thuộc tính phải giống nhau
         BeanUtils.populate(bacSi, req.getParameterMap());
@@ -133,26 +135,26 @@ public class BacSiServlet extends HttpServlet {
         //1. lấy id được gửi từ jsp
         String id = req.getParameter("id");
         //2. tìm đối tượng qua id
-        BacSi bacSi= bacSiRepo.getOne(Integer.valueOf(id));
+        BacSi bacSi = bacSiRepo.getOne(Integer.valueOf(id));
         //3. set thuộc tính cho đối tượng
-        req.setAttribute("bacSi",bacSi);
+        req.setAttribute("bacSi", bacSi);
         //4. gửi cả danh sách bacsi
-       // List<BacSi> listBacSi= bacSiRepo.getAll();
+        // List<BacSi> listBacSi= bacSiRepo.getAll();
         //List<PhongKham> listPhongKham= phongKhamRepo.getAll();//lấy thêm list PK
-        req.setAttribute("listBacSi",bacSiRepo.getAll());
+        req.setAttribute("listBacSi", bacSiRepo.getAll());
         req.setAttribute("listPhongKham", phongKhamRepo.getAll());//set thêm list PK
-        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req,resp);
+        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req, resp);
     }
 
 
     private void hienThi(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1. lấy danh sách từ bên repository -> csdl
-        List<BacSi> listBacSi= bacSiRepo.getAll();
-        List<PhongKham> listPhongKham= phongKhamRepo.getAll();//lấy thêm list PK
+        List<BacSi> listBacSi = bacSiRepo.getAll();
+        List<PhongKham> listPhongKham = phongKhamRepo.getAll();//lấy thêm list PK
         //2. set thuộc tính  -> gửi sang jsp
-        req.setAttribute("listBacSi",listBacSi);
+        req.setAttribute("listBacSi", listBacSi);
         req.setAttribute("listPhongKham", listPhongKham);//set thêm list PK
-        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req,resp);
+        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req, resp);
     }
 
 

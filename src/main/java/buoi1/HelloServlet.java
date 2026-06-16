@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+
 //@WebServlet
 //Đây là một annotation được sử dụng để định nghĩa một servlet trong ứng dụng Java web.
 //name chỉ định tên của servlet.
@@ -59,9 +60,9 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String message = "FPT Polytechnic";
-        req.setAttribute("message",message);
+        req.setAttribute("message", message);
         //chuyển sang file jsp
-        req.getRequestDispatcher("/buoi1/hello.jsp").forward(req,resp);
+        req.getRequestDispatcher("/buoi1/hello.jsp").forward(req, resp);
     }
 
     @Override

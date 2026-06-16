@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +24,7 @@ public class BacSi {
     private String diaChi;
     @Column(name = "luong")
     private BigDecimal luong;
-//    @Column(name = "idPhongKham")
+    //    @Column(name = "idPhongKham")
 //    private Integer idPhongKham;//chứa id foreign key -> phòng khám
     @ManyToOne//Quan hệ N-1=> nhiều bác sĩ- 1 phòng khám
     @JoinColumn(name = "idPhongKham", referencedColumnName = "id")

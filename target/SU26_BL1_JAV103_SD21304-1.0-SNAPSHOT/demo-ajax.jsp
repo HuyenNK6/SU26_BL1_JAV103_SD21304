@@ -11,15 +11,15 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        function getData(){
+        function getData() {
             $.ajax({
                 url: "/api/ajax/giang-vien",
                 type: "get",
                 dataType: "json",
-                success: function (response){
+                success: function (response) {
                     console.log(response)
                 },
-                error: function (){
+                error: function () {
                     console.log("LOI ROI!!!!!!")
                 }
             })
@@ -27,7 +27,7 @@
     </script>
 </head>
 <body>
-    <h1>DEMO AJAX</h1>
-    <button onclick="getData()">GET DATA</button>
+<h1>DEMO AJAX</h1>
+<button onclick="getData()">GET DATA</button>
 </body>
 </html>

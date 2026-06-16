@@ -17,14 +17,14 @@ import java.io.PrintWriter;
 public class AjaxController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        GiangVien gv= new GiangVien("HuyenNK6", "Khanh Huyen", 18, "UDPM");
+        GiangVien gv = new GiangVien("HuyenNK6", "Khanh Huyen", 18, "UDPM");
         //chuyển Object gv sang String JSON
         Gson gson = new Gson();
         String data = gson.toJson(gv);
         //chuyển đổi kiểu dữ liệu của response
         resp.setContentType("application/json");
         //hiển thị dữ liệu lên màn hình
-        PrintWriter pw= resp.getWriter();
+        PrintWriter pw = resp.getWriter();
         pw.println(data);
         pw.flush();
     }

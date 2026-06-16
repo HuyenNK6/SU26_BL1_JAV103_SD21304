@@ -11,8 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-    <h1> KẾT QUẢ LOGIN</h1>
-    <h1>${username}</h1>
-    <h1>${password}</h1>
+<h1> KẾT QUẢ LOGIN</h1>
+<h1>${username}</h1>
+<h1>${password}</h1>
 </body>
 </html>
